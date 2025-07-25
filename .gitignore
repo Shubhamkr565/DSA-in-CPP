@@ -1,7 +1,17 @@
+# Ignore compiled C/C++ files
 *.o
 *.out
 *.exe
 
+# Ignore VS Code settings folder
 .vscode/
+
+# Ignore log and temp files
 *.log
 *.tmp
+
+# Ignore test or demo folders
+examples/
+
+# Optional: Ignore Mac system file
+.DS_Store
