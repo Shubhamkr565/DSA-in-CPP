@@ -1,0 +1,136 @@
+## Approach Guide: Sorting Problems in Data Structures & Algorithms
+
+Below, you’ll find **problem-solving strategies** for each type of sorting problem, organized by difficulty. These are language-independent conceptual approaches you can apply before translating into code.
+
+### 🔰 Basic Sorting Problems
+
+- **Sort an Array of Integers**  
+  Decide on a simple algorithm (e.g., Bubble, Selection, or Insertion Sort). Repeatedly compare and reposition elements until the array is ordered.
+
+- **Sort an Array in Descending Order**  
+  Apply a basic sorting algorithm but swap elements to place larger values earlier. Alternatively, sort in ascending order, then reverse the array.
+
+- **Check if an Array is Sorted**  
+  Traverse the array once, checking that each element is less than or equal to the next (or greater than or equal for descending order).
+
+- **Count Swaps in Bubble Sort**  
+  Perform Bubble Sort while maintaining a count of each swap made between adjacent elements.
+
+- **Find Second Largest/Smallest Element with Sorting**  
+  Sort the array, then pick the second element from the appropriate end, skipping duplicates if needed.
+
+- **Remove Duplicates from a Sorted Array**  
+  Traverse, and each time a new value is encountered, shift it to the next available distinct position.
+
+- **Sort Array of 0s and 1s**  
+  Count the number of 0s, fill that many 0s in the array, and then the rest with 1s. Alternate: Two-pointer swap approach.
+
+- **Sort Array of 0s, 1s, and 2s (Dutch National Flag Problem)**  
+  Use three pointers to partition the array into three sections for 0s, 1s, and 2s in a single scan.
+
+### ⚙️ Intermediate Sorting Problems
+
+- **Sort Array using Merge or Quick Sort**  
+  Apply a divide-and-conquer strategy: recursively break the array into smaller parts, sort and merge.
+
+- **Find Kth Largest/Smallest Element**  
+  Sort the array, then select the $$ K $$th element from the appropriate end. Advanced: QuickSelect algorithm.
+
+- **Sort Characters of a String**  
+  Treat the string as an array and sort using any sorting method, or by counting occurrences if limited to alphabets.
+
+- **Sort Array of Strings by Length**  
+  Sort strings where the comparison is based on string length rather than lexicographic order.
+
+- **Count Inversions in an Array**  
+  Use a modified Merge Sort to count pairs where a larger element precedes a smaller one.
+
+- **Sort Array with Elements at Most k Away**  
+  Use a min-heap of size $$ k+1 $$ for efficient ordering as you scan.
+
+- **Find Pairs/Triplets with Given Sum (using Sorting)**  
+  Sort the array, then for pairs/triplets, use two or three pointers to efficiently check sums.
+
+- **Find Median of Unsorted Array**  
+  Sort the array and pick the middle element (or average of two middles, if even).
+
+- **Merge Two Sorted Arrays**  
+  Merge by repeatedly picking the smallest current element from either array, similar to Merge Sort merge step.
+
+- **Merge Overlapping Intervals**  
+  Sort intervals by starting point, then iterate, merging intervals that overlap.
+
+### 🧠 Advanced Sorting & Applications
+
+- **Radix/Bucket/Counting Sort Implementation**  
+  Use digit/character positions or value ranges to distribute and collect items without direct comparison.
+
+- **Find Minimum Difference between Elements**  
+  Sort the array, then find the smallest difference between consecutive elements.
+
+- **Sort Linked List using Merge Sort**  
+  Split the list recursively, merge sorted sublists efficiently.
+
+- **Form Largest Number from Array (Sort as Strings)**  
+  Define a custom comparison: concatenate pairs and decide order based on which concatenation forms a larger number.
+
+- **Relative Sorting (Based on Another Array)**  
+  Sort elements so those present in a reference array appear in the same order; others sorted as required.
+
+- **Sort Matrix Row-wise and Column-wise**  
+  Sort each row, then transpose and sort each row again.
+
+- **Find Closest Pair from Two Sorted Arrays**  
+  Use two pointers moving through both arrays to track the minimal absolute difference.
+
+- **Sort Nearly Sorted Array (k-sorted)**  
+  As earlier, use a heap of size $$ k+1 $$ for efficient replacement and extraction.
+
+- **Sort People by Height (Object Sort using Comparator)**  
+  Define a comparison logic for person objects based on the height (or other attributes).
+
+- **Sort Stack using Recursion**  
+  Recursively pop items, insert each back in sorted order.
+
+- **Minimum Platforms for Trains (Sort by Arrival/Departure)**  
+  Sort arrival and departure times separately, iterate to track platforms needed as trains arrive/depart.
+
+- **Sort Array using Heap (Heap Sort)**  
+  Build a max-heap, repeatedly extract the maximum to place at the correct position.
+
+- **Find Minimum Difference after Sorting**  
+  Same as minimum difference above; find the smallest difference between consecutive sorted values.
+
+### 🎯 Real-World Pattern Based Sorting Problems
+
+- **Merge Intervals**  
+  As earlier, sort by start time, merge overlaps in a single pass.
+
+- **Meeting Rooms I & II**  
+  Sort intervals by start time, then track the minimum number of rooms by comparing overlapping times.
+
+- **Top K Frequent Elements**  
+  Count frequencies, use a heap or sort by frequency, then return top $$ K $$.
+
+- **Largest Number**  
+  As above, sort elements as strings by a custom comparator.
+
+- **Sort Colors (Dutch Flag)**  
+  Partition array into three types using three pointers.
+
+- **Minimum Arrows to Burst Balloons**  
+  Sort intervals, then use greedy selection to minimize overlap coverage.
+
+- **Reorder Data in Log Files**  
+  Distinguish between letter-logs and digit-logs, sort letter-logs lexicographically, keep digit-logs in order.
+
+- **Reconstruct Queue by Height**  
+  Sort people by height descending, position them by their 'in front' count.
+
+- **Group Anagrams**  
+  Sort the characters in each word, group words with identical sorted forms.
+
+- **Sort Array by Parity**  
+  Arrange even and odd numbers, possibly using two pointers or by collecting separately, then combining.
+
+These approaches serve as blueprints. For each problem, first analyze complexity and constraints, then decide the most efficient strategy before coding.
