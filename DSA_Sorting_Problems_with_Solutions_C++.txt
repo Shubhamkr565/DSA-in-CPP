@@ -1,0 +1,315 @@
+1. Sort an array of integers
+Explanation:
+Solution (C++):
+```
+
+```
+
+2. Sort an array in descending order
+Explanation:
+Solution (C++):
+```
+
+```
+
+3. Check if an array is sorted
+Explanation:
+Solution (C++):
+```
+
+```
+
+4. Count how many swaps are required in Bubble Sort
+Explanation:
+Solution (C++):
+```
+
+```
+
+5. Find the second largest/smallest element using sorting
+Explanation:
+Solution (C++):
+```
+
+```
+
+6. Remove duplicates from a sorted array
+Explanation:
+Solution (C++):
+```
+
+```
+
+7. Sort an array of 0s and 1s
+Explanation:
+Solution (C++):
+```
+
+```
+
+8. Sort an array of 0s, 1s and 2s (Dutch National Flag Problem)
+Explanation:
+Solution (C++):
+```
+
+```
+
+9. Sort an array using Merge Sort
+Explanation:
+Solution (C++):
+```
+
+```
+
+10. Sort an array using Quick Sort
+Explanation:
+Solution (C++):
+```
+
+```
+
+11. Find the Kth largest/smallest element in an array
+Explanation:
+Solution (C++):
+```
+
+```
+
+12. Sort characters of a string
+Explanation:
+Solution (C++):
+```
+
+```
+
+13. Sort an array of strings by length
+Explanation:
+Solution (C++):
+```
+
+```
+
+14. Count Inversions in an array
+Explanation:
+Solution (C++):
+```
+
+```
+
+15. Sort an array where each element is at most k positions away from its sorted position
+Explanation:
+Solution (C++):
+```
+
+```
+
+16. Find the number of pairs with a given sum using sorting
+Explanation:
+Solution (C++):
+```
+
+```
+
+17. Find triplets with zero sum
+Explanation:
+Solution (C++):
+```
+
+```
+
+18. Find the median of an unsorted array
+Explanation:
+Solution (C++):
+```
+
+```
+
+19. Merge two sorted arrays
+Explanation:
+Solution (C++):
+```
+
+```
+
+20. Merge overlapping intervals (sort by start time first)
+Explanation:
+Solution (C++):
+```
+
+```
+
+21. Radix Sort implementation
+Explanation:
+Solution (C++):
+```
+
+```
+
+22. Bucket Sort implementation
+Explanation:
+Solution (C++):
+```
+
+```
+
+23. Counting Sort implementation
+Explanation:
+Solution (C++):
+```
+
+```
+
+24. Find minimum difference between any two elements
+Explanation:
+Solution (C++):
+```
+
+```
+
+25. Sort a linked list using Merge Sort
+Explanation:
+Solution (C++):
+```
+
+```
+
+26. Largest number that can be formed from an array
+Explanation:
+Solution (C++):
+```
+
+```
+
+27. Relative sorting
+Explanation:
+Solution (C++):
+```
+
+```
+
+28. Sort a matrix row-wise and column-wise
+Explanation:
+Solution (C++):
+```
+
+```
+
+29. Find the closest pair from two sorted arrays
+Explanation:
+Solution (C++):
+```
+
+```
+
+30. Sort a nearly sorted array (k-sorted array)
+Explanation:
+Solution (C++):
+```
+
+```
+
+31. Sort people by height
+Explanation:
+Solution (C++):
+```
+
+```
+
+32. Sort a stack using recursion
+Explanation:
+Solution (C++):
+```
+
+```
+
+33. Find the minimum number of platforms required for trains
+Explanation:
+Solution (C++):
+```
+
+```
+
+34. Sort an array using heap (Heap Sort)
+Explanation:
+Solution (C++):
+```
+
+```
+
+35. Find the minimum difference between elements after sorting
+Explanation:
+Solution (C++):
+```
+
+```
+
+36. Merge Intervals
+Explanation:
+Solution (C++):
+```
+
+```
+
+37. Meeting Rooms I
+Explanation:
+Solution (C++):
+```
+
+```
+
+38. Top K Frequent Elements
+Explanation:
+Solution (C++):
+```
+
+```
+
+39. Largest Number
+Explanation:
+Solution (C++):
+```
+
+```
+
+40. Sort Colors
+Explanation:
+Solution (C++):
+```
+
+```
+
+41. Minimum Number of Arrows to Burst Balloons
+Explanation:
+Solution (C++):
+```
+
+```
+
+42. Reorder Data in Log Files
+Explanation:
+Solution (C++):
+```
+
+```
+
+43. Reconstruct Queue by Height
+Explanation:
+Solution (C++):
+```
+
+```
+
+44. Group Anagrams
+Explanation:
+Solution (C++):
+```
+
+```
+
+45. Sort Array by Parity
+Explanation:
+Solution (C++):
+```
+
+```
+
