@@ -24,7 +24,7 @@ int main(){
         cout<<arr3[i]<<" ";
     }
     cout<<endl;
-
+    // using bubble sort
     int l3 = sizeof(arr3)/sizeof(arr3[0]);
     for(int i=0; i<l3-1; i++){
         for(int j=0; j<=l3-i-2; j++){
@@ -35,6 +35,21 @@ int main(){
             }
         }
     }
+    // using selection sort
+
+    for(int i=0; i<l3; i++){
+        int min_index = i;
+        for(int j=i+1; j<l3-i; j++){
+            if(arr3[j] < arr3[min_index]){
+                min_index = j;
+            }
+        }
+        int temp = arr3[i];
+        arr3[i] = arr3[min_index];
+        arr3[min_index]= temp;
+    }
+
+
     for(int i=0; i<l3; i++){
         cout<<arr3[i]<<" ";
     }
