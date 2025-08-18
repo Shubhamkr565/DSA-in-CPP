@@ -62,12 +62,12 @@ class LinkedList{
                 return;
             }
             if(index == 0){
-                addFirst(data);
+                addHead(data);
                 return;
             }
             if(index == size){
                 addLast(data);
-                return ;
+                return;
             }
             Node* newNode = new Node(data);
             Node* current = head;
@@ -75,10 +75,9 @@ class LinkedList{
                 current = current->next;
             }
             newNode->next = current->next;
-            current->next= newNode;
+            current->next = newNode;
             size++;
         }
-        
 
         void display(){
             Node* temp = head;
