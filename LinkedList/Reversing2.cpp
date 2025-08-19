@@ -23,11 +23,12 @@ public:
         size = 0;
     }
 
-    void insertAtLast(int data){
+    void addLast(int data){
         Node* newNode = new Node(data);
         if(head == NULL){
             head = newNode;
-        } else {
+        }
+        else{
             Node* temp = head;
             while(temp->next != NULL){
                 temp = temp->next;
@@ -43,20 +44,20 @@ public:
 
     void reverse(){
         if(head == NULL){
-            cout<<"Empty!"<<endl;
+            cout<<"Empty list...\n";
             return;
         }
-        Node* back = NULL;
-        Node* current = head;
-        Node* forward = NULL;
+        Node* prev = NULL;
+        Node* curr = head;
+        Node* nxt  = NULL;
 
-        while(current != NULL){
-            forward = current->next;
-            current->next = back;
-            back = current;
-            current = forward;
+        while(curr != NULL){
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
         }
-        head = back;
+        head = prev;
     }
 
     void display(){
@@ -66,25 +67,26 @@ public:
             temp = temp->next;
         }
         cout<<"NULL\n";
-        cout<<"Total Size: "<<getSize()<<endl;
+        cout<<"Size: "<<getSize()<<endl;
     }
 };
 
 int main(){
     LinkedList l1;
 
-    l1.insertAtLast(10);
-    l1.insertAtLast(20);
-    l1.insertAtLast(30);
-    l1.insertAtLast(40);
-    l1.insertAtLast(50);
+    l1.addLast(10);
+    l1.addLast(20);
+    l1.addLast(30);
+    l1.addLast(40);
+    l1.addLast(50);
+    l1.addLast(60);
 
-    cout<<"Before Reversing:\n";
+    cout<<"Original Linked List:\n";
     l1.display();
 
     l1.reverse();
 
-    cout<<"After Reversing:\n";
+    cout<<"\nAfter Reversing:\n";
     l1.display();
 
     return 0;
