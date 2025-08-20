@@ -18,13 +18,13 @@ private:
     int size;
 
 public:
-    LinkedList(){        // ✅ Constructor (no return type)
+    LinkedList(){        
         head = NULL;
         size = 0;
     }
 
     void addLast(int data){
-        Node* newNode = new Node(data); // ✅ new Node pointer
+        Node* newNode = new Node(data);  
         if(head == NULL){
             head = newNode;
         }else{
