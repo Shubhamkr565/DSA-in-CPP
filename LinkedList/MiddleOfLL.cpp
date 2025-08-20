@@ -18,17 +18,16 @@ private:
     int size;
 
 public:
-    LinkedList(){
+    LinkedList(){        // ✅ Constructor (no return type)
         head = NULL;
         size = 0;
     }
 
     void addLast(int data){
-        Node* newNode = new Node(data);
+        Node* newNode = new Node(data); // ✅ new Node pointer
         if(head == NULL){
             head = newNode;
-        }
-        else{
+        }else{
             Node* temp = head;
             while(temp->next != NULL){
                 temp = temp->next;
@@ -38,26 +37,17 @@ public:
         size++;
     }
 
-    int getSize(){
-        return size;
-    }
+    void middleList(){
+        Node* slow = head;
+        Node* fast = head;
 
-    void reverse(){
-        if(head == NULL){
-            cout<<"Empty list...\n";
-            return;
+        // ✅ find middle
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        Node* prev = NULL;
-        Node* curr = head;
-        Node* nxt  = NULL;
-
-        while(curr != NULL){
-            nxt = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = nxt;
-        }
-        head = prev;
+        if(slow != NULL)
+            cout<<slow->data<<endl;
     }
 
     void display(){
@@ -66,8 +56,7 @@ public:
             cout<<temp->data<<"->";
             temp = temp->next;
         }
-        cout<<"NULL\n";
-        cout<<"Size: "<<getSize()<<endl;
+        cout<<"NULL"<<endl;
     }
 };
 
@@ -81,13 +70,10 @@ int main(){
     l1.addLast(50);
     l1.addLast(60);
 
-    cout<<"Original Linked List:\n";
+    cout<<"Original List:"<<endl;
     l1.display();
-
-    l1.reverse();
-
-    cout<<"\nAfter Reversing:\n";
-    l1.display();
+    cout<<"Middle of this list: ";
+    l1.middleList();
 
     return 0;
 }
