@@ -1,0 +1,351 @@
+Doubly Linked List:
+======================
+A Doubly Linked List (DLL) is a linear data structure where each node contains links to both the next and previous node.
+Unlike a singly linked list (which moves only forward), a doubly linked list allows traversal in both directions.
+
+Node Structure:
+===================
+Structure based Node:
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Class based Node:
+class Node {
+public:
+    int data;
+    Node* next;
+    Node* prev;
+
+    //constructor
+    Node(int data) {
+        this -> data = data;
+        this -> next = NULL;
+        this -> prev = NULL;
+    }
+};
+
+Example Representation
+text
+NULL ← A ⇄ B ⇄ C ⇄ D → NULL
+
+A.prev = NULL
+A.next = B
+
+
+B.prev = A
+B.next = C
+
+
+C.prev = B
+C.next = D
+
+
+D.prev = C
+D.next = NULL
+
+
+
+
+Characteristics / Features:
+
+Each node has 2 pointers (prev and next).
+
+
+Can be traversed in both forward and backward direction.
+
+
+Insertion / Deletion is easier (if pointer to the node is given).
+
+
+Requires extra memory (for prev pointer).
+
+
+Used in browser history, playlist, undo/redo operations etc.
+
+
+
+Example:
+
+NULL ← A ⇄ B ⇄ C ⇄ D → NULL
+
+
+Doubly Linked List Class Definition:
+=======================================
+class DoublyLinkedList {
+
+private:
+    Node* head;
+    Node* tail;
+    int size;
+
+public:
+    DoublyLinkedList() {
+        head = NULL;
+        tail = NULL;
+        size = 0;
+    }
+
+    //all operations go here
+};
+
+
+Traversing a Doubly Linked List:
+
+Forward Traversal – using next pointer from head to tail
+
+
+Backward Traversal – using prev pointer from tail to head
+
+
+void displayForward() {
+    Node* temp = head;
+    while(temp != NULL){
+        cout << temp->data << " ⇄ ";
+        temp = temp->next;
+    }
+    cout<<"NULL"<<endl;
+}
+
+void displayBackward(){
+    Node* temp = tail;
+    while(temp != NULL){
+        cout<< temp->data <<" ⇄ ";
+        temp = temp->prev;
+    }
+    cout<<"NULL"<<endl;
+}
+
+
+Insert at Beginning:
+
+Logic:
+Create new node
+
+
+Connect it with existing head
+
+
+Update head (and tail if list was empty)
+
+
+void insertAtBeginning(int value){
+    Node* newNode = new Node(value);
+
+    if(head == NULL){
+        head = tail = newNode;
+    } else {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+    size++;
+}
+
+Example:
+Insert 5 into 10 ⇄ 20 ⇄ 30
+→ 5 ⇄ 10 ⇄ 20 ⇄ 30
+
+
+Insert at End:
+
+void insertAtEnd(int value){
+    Node* newNode = new Node(value);
+
+    if(head == NULL){
+        head = tail = newNode;
+    } else {
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+    size++;
+}
+
+Example:
+10 ⇄ 20 ⇄ 30   insert 40
+→ 10 ⇄ 20 ⇄ 30 ⇄ 40
+
+
+Insert at Any Position:
+
+If index = 0 → insertAtBeginning
+
+
+If index = size → insertAtEnd
+
+
+Else → insert in middle
+
+
+void insertAt(int index, int value){
+    if(index < 0 || index > size){
+        cout<<"Invalid Index\n";
+        return;
+    }
+    if(index == 0){
+        insertAtBeginning(value);
+        return;
+    }
+    if(index == size){
+        insertAtEnd(value);
+        return;
+    }
+
+    Node* newNode = new Node(value);
+    Node* current = head;
+
+    for(int i = 0; i < index - 1; i++){
+        current = current->next;
+    }
+    newNode->next = current->next;
+    newNode->prev = current;
+    current->next->prev = newNode;
+    current->next = newNode;
+
+    size++;
+}
+
+
+Deletion Operations
+
+
+
+Delete First Node:
+
+void removeFirst(){
+    if(head == NULL){
+        cout<<"List is empty\n";
+        return;
+    }
+    if(head == tail){
+        delete head;
+        head = tail = NULL;
+    } else {
+        Node* temp = head;
+        head = head->next;
+        head->prev = NULL;
+        delete temp;
+    }
+    size--;
+}
+
+
+Delete Last Node:
+
+void removeLast(){
+    if(head == NULL){
+        cout<<"List is empty\n";
+        return;
+    }
+    if(head == tail){
+        delete head;
+        head = tail = NULL;
+    } else {
+        Node* temp = tail;
+        tail = tail->prev;
+        tail->next = NULL;
+        delete temp;
+    }
+    size--;
+}
+
+
+Delete at Any Position:
+
+void deleteAt(int index){
+    if(index < 0 || index >= size){
+        cout<<"Invalid Index\n";
+        return;
+    }
+    if(index == 0){
+        removeFirst();
+        return;
+    }
+    if(index == size-1){
+        removeLast();
+        return;
+    }
+    Node* current = head;
+    for(int i = 0; i < index; i++){
+        current = current->next;
+    }
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+    delete current;
+    size--;
+}
+
+
+
+
+
+Searching in DLL
+
+
+int indexOf(int value) {
+    Node* current = head;
+    int index = 0;
+    while (current != NULL) {
+        if (current->data == value) return index;
+        current = current->next;
+        index++;
+    }
+    return -1;
+}
+
+
+
+Reversing a Doubly Linked List:
+
+void reverse(){
+    Node* current = head;
+    Node* temp = NULL;
+
+    // swap next and prev for all nodes
+    while(current != NULL){
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev;
+    }
+
+    // Swap head & tail
+    if(temp != NULL){
+        head = temp->prev;
+    }
+}
+
+
+Time Complexity of Operations in DLL:
+========================================
+Operation
+Time Complexity
+Insert at beginning
+O(1)
+Insert at end
+O(1)
+Insert at middle
+O(n)
+Delete at beginning
+O(1)
+Delete at end
+O(1)
+Delete at middle
+O(n)
+Traversal (forward/back)
+O(n)
+Reverse
+O(n)
+
+
+Real Life Analogy:
+
+Think of doubly linked list like a train with bogies having connectors both in front and back.
+You can move forward (using next bogie coupling) and backward (using previous bogie coupling).
+
+
+
+
