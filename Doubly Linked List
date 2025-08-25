@@ -316,6 +316,10 @@ void reverse(){
     if(temp != NULL){
         head = temp->prev;
     }
+    tail = head;
+    while(tail != NULL && tail->next != NULL){
+        tail = tail->next;
+    }
 }
 
 
