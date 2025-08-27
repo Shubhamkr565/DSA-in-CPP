@@ -316,10 +316,6 @@ void reverse(){
     if(temp != NULL){
         head = temp->prev;
     }
-    tail = head;
-    while(tail != NULL && tail->next != NULL){
-        tail = tail->next;
-    }
 }
 
 
@@ -353,3 +349,275 @@ You can move forward (using next bogie coupling) and backward (using previous bo
 
 
 
+
+
+
+
+
+
+
+
+
+
+ Doubly Linked List – Intermediate & Advanced Problems (with Logic & Examples)
+===============================================================================
+
+1. Find Middle of DLL  
+
+  Logic**:
+- Use two pointers (`slow`, `fast`).  
+- Move `slow` by 1 step, and `fast` by 2 steps.  
+- When `fast` reaches the end, `slow` will be at the middle.
+
+
+Node* findMiddle() {
+    if (head == NULL) return NULL;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow; 
+}
+
+
+**Example**:  
+`10 ⇄ 20 ⇄ 30 ⇄ 40 ⇄ 50`  
+- `slow` → 10, `fast` → 10  
+- Move: `slow` = 20, `fast` = 30  
+- Move: `slow` = 30, `fast` = 50  
+✅ Middle = **30**
+
+
+
+2. Remove Duplicates from Sorted DLL  
+
+**Logic**:
+- Traverse DLL from start.  
+- If `current->data == current->next->data`, **delete current->next**.  
+- Move forward only if no duplicate found.
+
+
+void removeDuplicates() {
+    if (head == NULL) return;
+    Node* current = head;
+
+    while (current != NULL && current->next != NULL) {
+        if (current->data == current->next->data) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            if (temp->next != NULL) {
+                temp->next->prev = current;
+            } else {
+                tail = current;
+            }
+            delete temp;
+            size--;
+        } else {
+            current = current->next;
+        }
+    }
+}
+
+
+**Example**:  
+Input → `10 ⇄ 20 ⇄ 20 ⇄ 30 ⇄ 30 ⇄ 40`  
+Output → `10 ⇄ 20 ⇄ 30 ⇄ 40`
+
+
+
+3. Check if DLL is Palindrome  
+
+**Logic**:
+- Use two pointers: `left = head`, `right = tail`.  
+- Compare values while moving inwards.  
+- If mismatch found → return false.  
+
+
+bool isPalindrome() {
+    if (head == NULL) return true;
+
+    Node* left = head;
+    Node* right = tail;
+
+    while (left != NULL && right != NULL && left != right && right->next != left) {
+        if (left->data != right->data) return false;
+        left = left->next;
+        right = right->prev;
+    }
+    return true;
+}
+
+
+**Example**:  
+- `1 ⇄ 2 ⇄ 3 ⇄ 2 ⇄ 1` → ✅ Palindrome  
+- `10 ⇄ 20 ⇄ 30` → ❌ Not a palindrome  
+
+
+
+4. Rotate DLL by K Nodes  
+
+**Logic**:
+- Traverse `k` nodes.  
+- Break the list at that position.  
+- Make new head = node after `k`.  
+- Connect `tail->next` to old head and fix `prev` links.  
+
+
+void rotate(int k) {
+    if (!head || k <= 0) return;
+
+    k = k % size;
+    if (k == 0) return;
+
+    Node* current = head;
+    for (int i = 1; i < k; i++) {
+        current = current->next;
+    }
+    Node* newHead = current->next;
+    newHead->prev = NULL;
+    current->next = NULL;
+
+    tail->next = head;
+    head->prev = tail;
+
+    head = newHead;
+    
+    // update new tail
+    tail = current;
+}
+
+
+**Example**:  
+DLL = `10 ⇄ 20 ⇄ 30 ⇄ 40 ⇄ 50`  
+Rotate by 2 → `30 ⇄ 40 ⇄ 50 ⇄ 10 ⇄ 20`
+
+
+
+5. Merge Two Sorted DLLs  
+
+**Logic**:
+- Use recursion or iteration.  
+- Pick smaller node from two lists.  
+- Adjust `prev` and `next`.  
+
+
+Node* mergeSorted(Node* first, Node* second) {
+    if (!first) return second;
+    if (!second) return first;
+
+    if (first->data < second->data) {
+        first->next = mergeSorted(first->next, second);
+        if (first->next) first->next->prev = first;
+        first->prev = NULL;
+        return first;
+    } else {
+        second->next = mergeSorted(first, second->next);
+        if (second->next) second->next->prev = second;
+        second->prev = NULL;
+        return second;
+    }
+}
+
+
+**Example**:  
+L1 = `10 ⇄ 30 ⇄ 50`  
+L2 = `20 ⇄ 40 ⇄ 60`  
+Merged → `10 ⇄ 20 ⇄ 30 ⇄ 40 ⇄ 50 ⇄ 60`
+
+
+6. Sort a DLL using Merge Sort  
+
+**Logic**:
+- Split list into two halves.  
+- Recursively sort two halves.  
+- Merge the two sorted halves.  
+
+
+Node* split(Node* head) {
+    Node* fast = head;
+    Node* slow = head;
+    while (fast->next && fast->next->next) {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    Node* second = slow->next;
+    slow->next = NULL;
+    return second;
+}
+
+Node* mergeSort(Node* node) {
+    if (!node || !node->next)
+        return node;
+
+    Node* second = split(node);
+
+    node = mergeSort(node);
+    second = mergeSort(second);
+
+    return mergeSorted(node, second);
+}
+
+
+**Example**:  
+Input = `40 ⇄ 10 ⇄ 30 ⇄ 20`  
+Output = `10 ⇄ 20 ⇄ 30 ⇄ 40`
+
+
+
+7. Convert DLL to Circular DLL  
+
+**Logic**:
+- Set `tail->next = head` and `head->prev = tail`.  
+
+void makeCircular() {
+    if (head == NULL) return;
+    tail->next = head;
+    head->prev = tail;
+}
+
+
+**Example**:  
+`10 ⇄ 20 ⇄ 30 → NULL`  
+After conversion →  
+`10 ⇄ 20 ⇄ 30 ⇄ (back to 10...)`
+
+
+
+8. Detect Loop in DLL  
+
+**Logic**:
+- Use **Floyd’s cycle detection algorithm** (slow, fast pointers).  
+- If they meet → loop exists.  
+
+
+bool hasLoop() {
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) return true;
+    }
+    return false;
+}
+
+
+**Example**:  
+- If `tail->next` accidentally points to `head` → loop detected.  
+
+
+
+✅ Summary  
+
+- Middle** → use slow & fast pointers  
+- Remove duplicates** → check adjacent nodes in sorted DLL  
+- Palindrome** → compare head & tail  
+- Rotate by k** → break after k, reattach  
+- Merge sort on DLL** → split + merge  
+- Circular DLL** → connect `head` & `tail`  
+- Loop detection** → Floyd’s algorithm  
