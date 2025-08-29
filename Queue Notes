@@ -1,0 +1,318 @@
+Queue using Linked List
+=========================
+A Queue is a linear data structure that follows the FIFO (First-In-First-Out) principle, meaning the first element inserted is the first one to be removed. When implemented using a Linked List, queues gain dynamic sizing with O(1) time for enqueue (insert at rear) and dequeue (remove from front) operations, making them efficient compared to array-based queues.
+Queue Using Linked List
+A linked-list-based queue uses nodes where each has a data field and a next  pointer. The queue maintains two pointers: Front for removal and Rear for insertion.
+
+Insertions happen at the rear.
+Deletions happen at the front.
+
+Real Life Analogies
+=======================
+ATM Queue 🏧 – First person in line withdraws money first.
+
+
+Burger Shop 🍔 – Customers served in arrival order.
+
+
+Bus Queue 🚌 – First person gets in first.
+
+
+Funny Analogy 😆 – Imagine waiting for ice cream 🍦:
+ If you try to "stack" yourself in front, the shopkeeper will say: "Bro, it’s a queue, not a stack!" 😂
+
+Applications of Queue
+=========================
+
+
+Printer Queue (first document prints first).
+
+
+Networking (packets transmission).
+
+
+Customer Service (first query answered first).
+
+
+Order processing systems.
+
+
+
+Basic Node Structure
+========================
+struct Node {
+    int data;
+    Node* next;
+};
+
+OR using class:
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int data) {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+
+Key Differences: in struct Node or class Node
+✅ When to Use:
+Use struct → when you just want a simple data holder (like Node, Point, Pair, etc.).
+
+
+Use class → when you want OOP features (encapsulation, hiding internal details, methods, etc.).
+⚡ Quick Memory Trick:
+struct = 🏠 Open House → everything public by default.
+
+
+class = 🔒 Locked House → everything private unless you give a key (public:).
+
+
+
+
+Queue Class Definition
+=========================
+We need two pointers:
+front → points to the first node (for deletion / dequeue)
+
+
+rear → points to the last node (for insertion / enqueue)
+Queue Representation (Diagram)
+Front → [10] -> [20] -> [30] → Rear
+
+class Queue {
+private:
+    Node* front;
+    Node* rear;
+    int size;
+
+public:
+    // constructor
+    Queue() {
+        front = rear = NULL;
+        size = 0;
+    }
+
+    // all operations will go here...
+};
+
+
+Operations on Queue
+======================
+1. Enqueue (Insert at Rear)
+
+Steps:
+Create a new node.
+
+
+If queue is empty → both front and rear point to new node.
+
+
+Else → link rear->next to new node and update rear.
+
+
+Code:
+void enqueue(int value) {
+    Node* newNode = new Node(value);
+
+    if (rear == NULL) { // empty queue
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+
+    size++;
+}
+
+
+2. Dequeue (Remove from Front)
+
+Steps:
+If empty → print message.
+
+
+Else → remove node from front, update front.
+
+
+If after deletion queue becomes empty → make rear = NULL.
+
+
+Code:
+void dequeue() {
+    if (front == NULL) {
+        cout << "Queue is empty\n";
+        return;
+    }
+
+    Node* temp = front;
+    front = front->next;
+
+    if (front == NULL) rear = NULL; // queue became empty
+
+    cout << "Dequeued: " << temp->data << endl;
+    delete temp;
+    size--;
+}
+
+
+3. Peek (Front element)
+int peek() {
+    if (front == NULL) {
+        cout << "Queue is empty\n";
+        return -1;
+    }
+    return front->data;
+}
+
+
+4. Display Queue
+void display() {
+    if (front == NULL) {
+        cout << "Queue is empty\n";
+        return;
+    }
+    Node* temp = front;
+    cout << "Queue: ";
+    while (temp != NULL) {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL\n";
+}
+
+
+5. Get Size
+int getSize() {
+    return size;
+}
+
+
+Dry Run Example
+==================
+Operations:
+ enqueue(10), enqueue(20), enqueue(30), dequeue(), enqueue(40)
+Start: front = NULL, rear = NULL
+
+
+enqueue(10) → 10
+
+
+enqueue(20) → 10 → 20
+
+
+enqueue(30) → 10 → 20 → 30
+
+
+dequeue() → removes 10, queue = 20 → 30
+
+
+enqueue(40) → 20 → 30 → 40
+
+
+
+Time & Space Complexity
+==========================
+Enqueue: O(1)
+
+
+Dequeue: O(1)
+
+
+Peek: O(1)
+
+
+Display/Traversal: O(n)
+
+
+Space: O(n) (n = number of elements in queue)
+
+
+
+Characteristics of Queue (Linked List-based)
+===============================================
+Follows FIFO order.
+
+
+Dynamic size → grows/shrinks at runtime.
+
+
+Enqueue = insert at rear.
+
+
+Dequeue = remove from front.
+
+
+No wasted memory (unlike array queue where unused spaces may remain).
+
+
+
+Array vs Linked List Queue
+=============================
+Feature
+Array Queue
+Linked List Queue
+Size
+Fixed
+Dynamic
+Memory Allocation
+Contiguous
+Non-contiguous
+Enqueue/Dequeue
+May cause shifting (O(n))
+Always O(1)
+Overflow
+Can happen (if fixed size)
+No overflow (unless memory full)
+
+
+
+Common Interview Questions
+==============================
+What is the difference between stack and queue?
+ 👉 Stack: LIFO, Queue: FIFO
+
+
+Why use Linked List over Array for Queue?
+ 👉 Avoids shifting, no fixed size.
+
+
+Time complexity of enqueue/dequeue in linked list queue?
+ 👉 O(1)
+
+
+MCQ:
+ If queue has [10, 20, 30] and we perform dequeue(), what remains?
+ a) [10, 20]
+ b) [20, 30] ✅
+ c) [30, 10]
+ d) Empty
+
+
+
+Summary / Quick Revision
+============================
+Queue = FIFO (First In First Out).
+
+
+Implemented with Linked List → dynamic, efficient.
+
+
+Enqueue → add at rear.
+
+
+Dequeue → remove from front.
+
+
+Time Complexity: Enqueue O(1), Dequeue O(1).
+
+
+Applications: CPU scheduling, printers, customer support.
+
+
+
+
+
