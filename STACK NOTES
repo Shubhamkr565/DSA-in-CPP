@@ -1,0 +1,469 @@
+
+📘 STACK NOTES (From Basics to Advanced)
+
+1. What is a Stack?
+A stack is a linear data structure that follows the LIFO (Last In First Out) principle.
+ 👉 The element that is inserted last will be the first to be removed.
+Real-Life Funny Examples:
+Stack of Plates 🍽️ – You always put the new plate on top, and when someone is hungry, they take from the top.
+
+
+Clothes Pile 👕 – Your dirty laundry basket → You throw new clothes on top, and when mom shouts “Get the top one first!” 😅
+
+
+Backpack 🎒 – You stuffed books in your bag, the last book you shoved in is the first one you’ll take out.
+
+
+Diagram Representation
+Top → [50] → [40] → [30] → [20] → [10]
+
+
+
+2. Operations in Stack
+Operation
+Description
+Time Complexity
+Push(x)
+Insert element x at the top
+O(1)
+Pop()
+Remove the top element
+O(1)
+Peek() / Top()
+Return the top element
+O(1)
+isEmpty()
+Checks if stack is empty
+O(1)
+Display()
+Shows all elements
+O(n)
+
+
+3. Implementations
+(A) Using Array
+#include<iostream>
+using namespace std;
+
+
+#define MAX 5
+
+
+class Stack{
+   int arr[MAX];
+   int top;
+
+
+   public:
+       Stack(){
+           top = -1;
+       }
+       void push(int data){
+           if(top == MAX-1){
+               cout<<"Stack OverFlow...."<<endl;
+               return;
+           }
+           arr[++top] = data;
+           cout<<data<<" Push into stack."<<endl;
+       }
+       void pop(){
+           if(top == -1){
+               cout<<"Stack is Empty: NO POP."<<endl;
+               return;
+           }
+           cout<<arr[top--]<<" Poped from stack."<<endl;
+       }
+       void peek(){
+           if(top == -1){
+               cout<<"Stack is Empty: NO PEEK."<<endl;
+               return;
+           }
+           cout<<"Top element "<<arr[top]<<endl;
+       }
+
+
+       bool isEmpty(){
+           return (top == -1);
+       }
+       void display(){
+           if(top == -1){
+               cout<<"Stack is Empty:"<<endl;
+               return;
+           }
+           cout<<"Stack Element (top to down)."<<endl;
+           for(int i=top; i>=0; i--){
+               cout<<arr[i]<<" ";
+           }
+           cout<<endl;
+       }
+};
+
+
+
+
+int main(){
+   Stack s1;
+
+
+   s1.push(10);
+   s1.push(20);
+   s1.push(30);
+   s1.push(40);
+   s1.push(50);
+   // s1.push(60);
+   // s1.push(70);
+
+
+   s1.pop();
+   s1.peek();
+
+
+   s1.display();
+  
+}
+
+
+
+(B) Using Linked List
+👉 Dynamic size, no overflow (unless memory full).
+ 
+#include<iostream>
+using namespace std;
+
+
+struct Node {
+   int data;
+   Node* next;
+};
+
+
+class Stack {
+   Node* top;
+
+
+public:
+   Stack() {
+       top = NULL;
+   }
+
+
+   // Push operation
+   void push(int data) {
+       Node* newNode = new Node();
+       newNode->data = data;
+       newNode->next = top;
+       top = newNode;
+       cout << data << " pushed into stack." << endl;
+   }
+
+
+   // Pop operation
+   void pop() {
+       if (top == NULL) {
+           cout << "Stack is empty. Cannot pop!" << endl;
+           return;
+       }
+       Node* temp = top;
+       cout << top->data << " is popped from stack." << endl;
+       top = top->next;
+       delete temp;
+   }
+
+
+   // Peek operation
+   void peek() {
+       if (top == NULL) {
+           cout << "Stack is empty!" << endl;
+           return;
+       }
+       cout << "Top element is: " << top->data << endl;
+   }
+
+
+   // Display stack
+   void display() {
+       if (top == NULL) {
+           cout << "Stack is empty!" << endl;
+           return;
+       }
+       Node* temp = top;
+       cout << "Stack elements (Top -> Bottom): ";
+       while (temp != NULL) {
+           cout << temp->data << " ";
+           temp = temp->next;
+       }
+       cout << endl;
+   }
+};
+
+
+int main() {
+   Stack s1;
+
+
+   s1.push(10);
+   s1.push(20);
+   s1.push(30);
+   s1.push(40);
+   s1.push(50);
+   s1.push(60);
+
+
+   s1.display();
+
+
+   s1.pop();
+   s1.display();
+
+
+   s1.peek();
+
+
+   return 0;
+}
+
+
+
+
+(C) Using STL (C++ )
+👉 Most used in interviews and competitive coding.
+#include <iostream>
+#include <stack>
+using namespace std;
+
+
+int main() {
+   // Declare stack of integers
+   stack<int> s;
+
+
+   // Push elements
+   s.push(10);
+   s.push(20);
+   s.push(30);
+
+
+   cout << "Top element: " << s.top() << endl; // should print 30
+
+
+   // Pop element
+   s.pop();
+   cout << "Top element after pop: " << s.top() << endl; // should print 20
+
+
+   // Size of stack
+   cout << "Stack size: " << s.size() << endl;
+
+
+   // Check if empty
+   if(s.empty())
+       cout << "Stack is empty" << endl;
+   else
+       cout << "Stack is not empty" << endl;
+
+
+   // Display all elements (by popping)
+   cout << "Stack elements (top to bottom): ";
+   while(!s.empty()) {
+       cout << s.top() << " ";
+       s.pop();
+   }
+   cout << endl;
+
+
+   return 0;
+}
+
+
+
+
+
+4. Dry Run Example (Push/Pop)
+Push 10 → [10]
+Push 20 → [20, 10]
+Push 30 → [30, 20, 10]
+Peek    → Top = 30
+Pop     → Remove 30 → [20, 10]
+Peek    → Top = 20
+
+
+5. Advanced Stack Problems
+
+🟢 Problem 1: Balanced Parentheses
+Statement:
+Check if parentheses/brackets are balanced.
+Example:
+Input: ({[]}) → ✅ Balanced
+
+
+Input: ([)] → ❌ Not Balanced
+
+
+Code:
+// Check if parentheses/brackets are balanced.
+
+
+#include<iostream>
+#include<stack> // using stack from STL
+using namespace std;
+
+
+bool isBalanced(string exp){
+   stack<char> st; // stack to store opening brackets
+
+
+   for(int i=0; i<exp.size(); i++){
+        // If it's an opening bracket → push into stack
+       if(exp[i] == '(' || exp[i] == '{' || exp[i] == '['){//opening
+           st.push(exp[i]);
+       }else{
+           // If stack is empty → no matching opening bracket
+           if(st.empty()){
+               return false;
+           }
+             // Check if top of stack matches the current closing bracket
+           if((st.top() == '(' && exp[i] == ')' ||
+               st.top() == '{' && exp[i] == '}' ||
+               st.top() == '[' && exp[i] == ']')){
+                   st.pop();
+               }else{
+                   return false; // mismatch case
+               }
+       }
+   }
+   return st.empty(); // If stack is empty → all brackets matched correctly
+}
+
+
+int main(){
+   string exp = "{[()]}";
+   cout<<(isBalanced(exp)? " Balance ": " Not Balance ");
+   return 0;
+}
+
+
+
+🟢 Problem 2: Next Greater Element (NGE)
+Statement:
+For each element, find the next greater element on its right.
+Example:
+Input: [4, 5, 2, 25]
+ Output: [5, 25, 25, -1]
+Code:
+#include<iostream>
+#include<stack>
+#include<vector>
+using namespace std;
+
+vector<int> nextGreater(vector<int>& arr) {
+    int n = arr.size();
+    vector<int> result(n, -1);
+    stack<int> s; 
+
+    for(int i=n-1; i>=0; i--) {
+        while(!s.empty() && s.top() <= arr[i]) s.pop();
+        if(!s.empty()) result[i] = s.top();
+        s.push(arr[i]);
+    }
+    return result;
+}
+
+int main() {
+    vector<int> arr = {4, 5, 2, 25};
+    vector<int> ans = nextGreater(arr);
+    for(int x : ans) cout << x << " ";
+}
+
+
+🟢 Problem 3: Stock Span Problem
+Statement:
+Given stock prices, find span of stock’s price for each day.
+ 👉 Span = No. of consecutive days price was less than or equal to today’s price.
+Example:
+Prices = [100, 80, 60, 70, 60, 75, 85]
+ Span = [1, 1, 1, 2, 1, 4, 6]
+Code:
+#include<iostream>
+#include<stack>
+#include<vector>
+using namespace std;
+
+vector<int> stockSpan(vector<int>& price) {
+    int n = price.size();
+    vector<int> span(n);
+    stack<int> s; // store index
+
+    for(int i=0; i<n; i++) {
+        while(!s.empty() && price[s.top()] <= price[i]) s.pop();
+        span[i] = (s.empty()) ? (i+1) : (i - s.top());
+        s.push(i);
+    }
+    return span;
+}
+
+int main() {
+    vector<int> price = {100, 80, 60, 70, 60, 75, 85};
+    vector<int> ans = stockSpan(price);
+    for(int x : ans) cout << x << " ";
+}
+
+
+🟢 Problem 4: Evaluate Postfix Expression
+Example:
+Input: 231*+9-
+ Step: 2 + (3*1) - 9 = -4
+ Output: -4
+Code:
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int evaluatePostfix(string exp) {
+    stack<int> s;
+    for(char ch : exp) {
+        if(isdigit(ch)) s.push(ch - '0');
+        else {
+            int val2 = s.top(); s.pop();
+            int val1 = s.top(); s.pop();
+            switch(ch) {
+                case '+': s.push(val1 + val2); break;
+                case '-': s.push(val1 - val2); break;
+                case '*': s.push(val1 * val2); break;
+                case '/': s.push(val1 / val2); break;
+            }
+        }
+    }
+    return s.top();
+}
+
+int main() {
+    string exp = "231*+9-";
+    cout << "Postfix Evaluation: " << evaluatePostfix(exp);
+}
+
+
+7. Complexity Summary
+Push / Pop / Peek → O(1)
+
+
+Display → O(n)
+
+
+Advanced Problems
+
+
+Balanced Parentheses → O(n)
+
+
+Next Greater Element → O(n)
+
+
+Stock Span → O(n)
+
+
+Postfix Evaluation → O(n)
+
+
+
+
+
