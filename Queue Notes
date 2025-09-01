@@ -1,3 +1,140 @@
+Queue using Array
+A Queue can also be implemented using an Array.
+ It follows FIFO (First-In-First-Out), but unlike Linked List, the size of the queue is fixed.
+👉 Problem: If we keep inserting at rear and deleting from front, then after some deletions, there will be unused space in the beginning of the array.
+ 👉 Solution: Use Circular Queue to reuse that space.
+
+Basic Representation
+Queue stored in an array:
+Index:   0   1   2   3   4
+Value:  [10][20][30][  ][  ]
+Front → 0
+Rear  → 2
+
+
+
+Queue Class using Array
+class Queue {
+private:
+    int* arr;
+    int front, rear, size, capacity;
+
+public:
+    // constructor
+    Queue(int cap) {
+        capacity = cap;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    // enqueue
+    void enqueue(int value) {
+        if (size == capacity) {
+            cout << "Queue Overflow\n";
+            return;
+        }
+        rear = (rear + 1) % capacity; // circular increment
+        arr[rear] = value;
+        size++;
+    }
+
+    // dequeue
+    void dequeue() {
+        if (size == 0) {
+            cout << "Queue Underflow\n";
+            return;
+        }
+        cout << "Dequeued: " << arr[front] << endl;
+        front = (front + 1) % capacity; // circular increment
+        size--;
+    }
+
+    // peek
+    int peek() {
+        if (size == 0) {
+            cout << "Queue is empty\n";
+            return -1;
+        }
+        return arr[front];
+    }
+
+    // display
+    void display() {
+        if (size == 0) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        cout << "Queue: ";
+        for (int i = 0; i < size; i++) {
+            cout << arr[(front + i) % capacity] << " -> ";
+        }
+        cout << "NULL\n";
+    }
+
+    // get size
+    int getSize() {
+        return size;
+    }
+};
+
+
+Dry Run Example (Array Queue)
+Capacity = 5
+Operations:
+ enqueue(10), enqueue(20), enqueue(30), dequeue(), enqueue(40)
+Step by step:
+Operation
+Front
+Rear
+Queue
+enqueue(10)
+0
+0
+[10]
+enqueue(20)
+0
+1
+[10, 20]
+enqueue(30)
+0
+2
+[10, 20, 30]
+dequeue()
+1
+2
+[20, 30]
+enqueue(40)
+1
+3
+[20, 30, 40]
+
+
+Time & Space Complexity (Array Queue)
+Enqueue: O(1) (with circular array)
+
+
+Dequeue: O(1)
+
+
+Peek: O(1)
+
+
+Display: O(n)
+
+
+Space: O(n) (fixed at creation)
+
+
+
+Characteristics of Queue (Array-based)
+✅ Simple to implement
+ ✅ Random access possible (direct indexing)
+ ❌ Fixed size (overflow can occur)
+ ❌ Need circular logic to reuse memory
+
+
 Queue using Linked List
 =========================
 A Queue is a linear data structure that follows the FIFO (First-In-First-Out) principle, meaning the first element inserted is the first one to be removed. When implemented using a Linked List, queues gain dynamic sizing with O(1) time for enqueue (insert at rear) and dequeue (remove from front) operations, making them efficient compared to array-based queues.
@@ -270,6 +407,151 @@ No overflow (unless memory full)
 
 
 
+Circular Queue (Using Array)
+==============================
+ 👉 In a normal array queue, when rear reaches the last index, we can’t insert more elements even if there is empty space at the beginning (after some dequeues).
+ 👉 To fix this, we use Circular Queue.
+Here, array is treated as circular:
+After the last index, rear goes back to index 0 (if space available).
+
+
+Same for front during dequeue.
+
+
+
+Representation
+Capacity = 5
+Index:   0    1    2    3    4
+Queue:  [10] [20] [30] [  ] [  ]
+Front = 0
+Rear  = 2
+
+If we enqueue(40), enqueue(50):
+[10] [20] [30] [40] [50]
+Front = 0
+Rear  = 4
+
+Now if we dequeue twice:
+[  ] [  ] [30] [40] [50]
+Front = 2
+Rear  = 4
+
+👉 Next enqueue will go to index 0 (circular).
+
+Circular Queue Code
+class CircularQueue {
+private:
+    int* arr;
+    int front, rear, size, capacity;
+
+public:
+    CircularQueue(int cap) {
+        capacity = cap;
+        arr = new int[capacity];
+        front = -1;
+        rear = -1;
+        size = 0;
+    }
+
+    // Enqueue
+    void enqueue(int value) {
+        if ((front == 0 && rear == capacity - 1) || (rear + 1) % capacity == front) {
+            cout << "Queue Overflow\n";
+            return;
+        }
+        if (front == -1) { // empty queue
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % capacity;
+        }
+        arr[rear] = value;
+        size++;
+    }
+
+    // Dequeue
+    void dequeue() {
+        if (front == -1) {
+            cout << "Queue Underflow\n";
+            return;
+        }
+        cout << "Dequeued: " << arr[front] << endl;
+        if (front == rear) { // only one element
+            front = rear = -1;
+        } else {
+            front = (front + 1) % capacity;
+        }
+        size--;
+    }
+
+    // Peek
+    int peek() {
+        if (front == -1) {
+            cout << "Queue is empty\n";
+            return -1;
+        }
+        return arr[front];
+    }
+
+    // Display
+    void display() {
+        if (front == -1) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        cout << "Queue: ";
+        int i = front;
+        while (true) {
+            cout << arr[i] << " -> ";
+            if (i == rear) break;
+            i = (i + 1) % capacity;
+        }
+        cout << "NULL\n";
+    }
+};
+
+
+Dry Run Example (Circular Queue)
+Capacity = 5
+ Operations:
+ enqueue(10), enqueue(20), enqueue(30), enqueue(40), dequeue(), dequeue(), enqueue(50), enqueue(60)
+Operation
+Front
+Rear
+Queue (capacity=5)
+enqueue(10)
+0
+0
+[10]
+enqueue(20)
+0
+1
+[10, 20]
+enqueue(30)
+0
+2
+[10, 20, 30]
+enqueue(40)
+0
+3
+[10, 20, 30, 40]
+dequeue()
+1
+3
+[20, 30, 40]
+dequeue()
+2
+3
+[30, 40]
+enqueue(50)
+2
+4
+[30, 40, 50]
+enqueue(60)
+2
+0
+[60, 30, 40, 50] (wrapped)
+
+
 Common Interview Questions
 ==============================
 What is the difference between stack and queue?
@@ -312,6 +594,417 @@ Time Complexity: Enqueue O(1), Dequeue O(1).
 
 Applications: CPU scheduling, printers, customer support.
 
+
+
+
+
+
+
+
+
+
+
+
+
+Priority Queue using Linked List
+=========================================
+ A Priority Queue is a special type of Queue where each element has a priority.
+ Instead of simple FIFO, elements are dequeued based on their priority (highest priority served first).
+👉 If two elements have the same priority, then the one that arrived earlier is served first (FIFO among equals).
+
+Real-Life Analogies
+==========================
+ 🏥 Hospital Emergency Room – A patient with a severe case is treated before minor injuries.
+🚦 Traffic System – VIP vehicles (ambulance, fire truck 🚒) get priority over normal cars.
+🎮 Game Server – Premium players might get priority access over free users.
+
+Applications of Priority Queue
+====================================
+CPU Scheduling (high-priority process runs first).
+
+
+Dijkstra’s Algorithm (shortest path uses priority queue).
+
+
+Data Compression (Huffman Coding).
+
+
+Event-driven systems (handling urgent events first).
+
+
+
+Node Structure for Priority Queue
+=========================================
+ Each node stores:
+data (value)
+
+
+priority (integer)
+
+
+next pointer
+
+
+class Node {
+public:
+    int data;
+    int priority;
+    Node* next;
+
+    Node(int d, int p) {
+        data = d;
+        priority = p;
+        next = NULL;
+    }
+};
+
+
+Priority Queue Representation
+=====================================
+ Queue stores nodes in sorted order by priority.
+Higher priority = served first
+
+
+If equal priority = FIFO
+
+
+Diagram:
+Front → [Data=30, P=1] → [Data=40, P=2] → [Data=10, P=3] → Rear
+(P=1 = Highest Priority)
+
+
+Priority Queue Class
+================================
+class PriorityQueue {
+private:
+    Node* front;   // always points to highest priority node
+    int size;
+
+public:
+    PriorityQueue() {
+        front = NULL;
+        size = 0;
+    }
+
+    // operations: enqueue, dequeue, peek, display
+};
+
+
+Operations on Priority Queue
+==================================
+1. Enqueue (Insert by Priority)
+Steps:
+Create a new node.
+
+
+If queue empty → make it front.
+
+
+Else → insert in correct position (sorted by priority).
+
+
+void enqueue(int value, int p) {
+    Node* newNode = new Node(value, p);
+
+    // if empty or higher priority than front
+    if (front == NULL || p < front->priority) {
+        newNode->next = front;
+        front = newNode;
+    } else {
+        Node* temp = front;
+        // find correct position
+        while (temp->next != NULL && temp->next->priority <= p) {
+            temp = temp->next;
+        }
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+    size++;
+}
+
+
+2. Dequeue (Remove Highest Priority)
+Steps:
+If empty → message.
+
+
+Else remove front node.
+
+
+void dequeue() {
+    if (front == NULL) {
+        cout << "Priority Queue is empty\n";
+        return;
+    }
+    Node* temp = front;
+    cout << "Dequeued: " << temp->data << " (Priority " << temp->priority << ")\n";
+    front = front->next;
+    delete temp;
+    size--;
+}
+
+
+3. Peek (See Highest Priority Element)
+int peek() {
+    if (front == NULL) {
+        cout << "Priority Queue is empty\n";
+        return -1;
+    }
+    return front->data;
+}
+
+
+4. Display Priority Queue
+void display() {
+    if (front == NULL) {
+        cout << "Priority Queue is empty\n";
+        return;
+    }
+    Node* temp = front;
+    cout << "Priority Queue: ";
+    while (temp != NULL) {
+        cout << "[" << temp->data << ",P=" << temp->priority << "] -> ";
+        temp = temp->next;
+    }
+    cout << "NULL\n";
+}
+
+
+Dry Run Example
+==================================
+ Operations:
+ enqueue(10,3), enqueue(20,2), enqueue(30,1), dequeue(), enqueue(40,2)
+Steps:
+enqueue(10,3) → [10,P=3]
+
+
+enqueue(20,2) → [20,P=2] → [10,P=3]
+
+
+enqueue(30,1) → [30,P=1] → [20,P=2] → [10,P=3]
+
+
+dequeue() → removes (30,P=1), queue = [20,P=2] → [10,P=3]
+
+
+enqueue(40,2) → [20,P=2] → [40,P=2] → [10,P=3]
+
+
+
+Time & Space Complexity
+================================
+Enqueue (insert by priority): O(n) (need to traverse list)
+
+
+Dequeue (remove front): O(1)
+
+
+Peek: O(1)
+
+
+Space: O(n)
+
+
+
+Characteristics of Priority Queue (Linked List-based)
+============================================================
+Elements dequeued based on priority, not arrival order.
+
+
+Supports dynamic size.
+
+
+Enqueue takes O(n) because of sorting.
+
+
+Dequeue always O(1).
+
+
+
+Array vs Linked List Priority Queue
+=========================================
+Feature
+Array Priority Queue
+Linked List Priority Queue
+Enqueue
+O(1) (insert at end)
+O(n) (sorted insert)
+Dequeue
+O(n) (find max priority)
+O(1) (always front)
+Size
+Fixed
+Dynamic
+
+
+Common Interview Questions
+=================================
+ Q1. Difference between Normal Queue and Priority Queue?
+ 👉 Normal Queue → FIFO.
+ 👉 Priority Queue → based on priority.
+Q2. Time complexity of enqueue & dequeue in Linked List Priority Queue?
+ 👉 Enqueue O(n), Dequeue O(1).
+Q3. Which is better for Priority Queue: Array or Linked List?
+ 👉 Depends:
+If frequent insertions → Array better.
+
+
+If frequent deletions → Linked List better.
+
+
+MCQ:
+ If we insert (10,P=3), (20,P=2), (30,P=1) into PQ, which comes out first?
+ a) 10
+ b) 20
+ c) 30 ✅
+
+Summary / Quick Revision
+===============================
+Priority Queue = Queue with priorities.
+
+
+Enqueue → insert in sorted order.
+
+
+Dequeue → remove highest priority (front).
+
+
+Time Complexity: Enqueue O(n), Dequeue O(1).
+
+
+Applications: CPU scheduling, graph algorithms, networking.
+
+
+
+
+
+
+
+
+
+
+Priority Queue using Array
+===============================
+ A Priority Queue is a queue where each element has a priority.
+ 👉 In Array implementation, elements are stored normally, but for dequeue we always remove the highest-priority element.
+
+Representation
+Suppose we insert:
+(10,P=3), (20,P=2), (30,P=1)
+
+Stored in array:
+Data:     [10] [20] [30]
+Priority: [ 3] [ 2] [ 1]
+
+👉 When we dequeue → (30,P=1) removed first (highest priority = smallest number).
+
+Priority Queue Code (Array)
+class PriorityQueueArray {
+private:
+    int* data;
+    int* priority;
+    int capacity;
+    int size;
+
+public:
+    PriorityQueueArray(int cap) {
+        capacity = cap;
+        data = new int[capacity];
+        priority = new int[capacity];
+        size = 0;
+    }
+
+    // Enqueue (O(1))
+    void enqueue(int value, int p) {
+        if (size == capacity) {
+            cout << "Queue Overflow\n";
+            return;
+        }
+        data[size] = value;
+        priority[size] = p;
+        size++;
+    }
+
+    // Dequeue (O(n) - find highest priority)
+    void dequeue() {
+        if (size == 0) {
+            cout << "Queue Underflow\n";
+            return;
+        }
+        int highest = 0;
+        for (int i = 1; i < size; i++) {
+            if (priority[i] < priority[highest]) {
+                highest = i;
+            }
+        }
+        cout << "Dequeued: " << data[highest] 
+             << " (Priority " << priority[highest] << ")\n";
+
+        // shift elements left
+        for (int i = highest; i < size - 1; i++) {
+            data[i] = data[i + 1];
+            priority[i] = priority[i + 1];
+        }
+        size--;
+    }
+
+    // Peek
+    int peek() {
+        if (size == 0) {
+            cout << "Priority Queue is empty\n";
+            return -1;
+        }
+        int highest = 0;
+        for (int i = 1; i < size; i++) {
+            if (priority[i] < priority[highest]) highest = i;
+        }
+        return data[highest];
+    }
+
+    // Display
+    void display() {
+        if (size == 0) {
+            cout << "Priority Queue is empty\n";
+            return;
+        }
+        cout << "Priority Queue: ";
+        for (int i = 0; i < size; i++) {
+            cout << "[" << data[i] << ",P=" << priority[i] << "] -> ";
+        }
+        cout << "NULL\n";
+    }
+};
+
+
+Dry Run Example (Priority Queue Array)
+Operations:
+ enqueue(10,3), enqueue(20,2), enqueue(30,1), dequeue(), enqueue(40,2)
+Step by step:
+Operation
+Queue State (Data, Priority)
+enqueue(10,3)
+[(10,P=3)]
+enqueue(20,2)
+[(10,P=3), (20,P=2)]
+enqueue(30,1)
+[(10,P=3), (20,P=2), (30,P=1)]
+dequeue()
+Removes (30,P=1) → [(10,P=3), (20,P=2)]
+enqueue(40,2)
+[(10,P=3), (20,P=2), (40,P=2)]
+
+
+Time & Space Complexity (Array PQ)
+Enqueue: O(1) (insert at end)
+
+
+Dequeue: O(n) (need to search highest priority)
+
+
+Peek: O(n)
+
+
+Space: O(n)
 
 
 
