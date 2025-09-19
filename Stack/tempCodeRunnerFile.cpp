@@ -1,2 +1,2 @@
-
-    // s1.push(70);
+cout << "Enter expression with brackets: ";
+    cin >> expr;
