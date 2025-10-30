@@ -9,14 +9,14 @@ class Node{
 
     Node(int value){
         this->value = value;
-        this->left = NULL;
+        this->left = NULL;  
         this->right = NULL;
     }
 };
 
 int getHeight(Node* root){
-    if(root == NULL)return 0;
-    return 1+ max(getHeight(root->left), getHeight(root->right));
+    if(root == NULL) return 0;
+    return 1 + max(getHeight(root->left), getHeight(root->right));
 }
 
 int getBalance(Node* root){
@@ -30,6 +30,7 @@ Node* rightRotation(Node* y){
 
     x->right = y;
     y->left = T2;
+
     return x;
 }
 
@@ -38,50 +39,51 @@ Node* leftRotation(Node* x){
     Node* T2 = y->left;
 
     y->left = x;
-    x->right= T2;
+    x->right = T2;
 
     return y;
 }
 
 Node* insertAVL(Node* root, int key){
-    if(root == NULL){
-        cout << "Creating new node: " << key << endl;
+    if(root == NULL) {
         return new Node(key);
     }
     if(key < root->value){
         root->left = insertAVL(root->left, key);
-    }else if(key > root->value){
+    } else if(key > root->value){
         root->right = insertAVL(root->right, key);
-    }else {
+    } else {
         return root;
     }
 
     int balance = getBalance(root);
-    cout << "Node " << root->value << " -> Balance = " << balance << endl;
 
-    if(balance > 1 && root->left != NULL && key < root->left->value){
+    // Left Left Case
+    if(balance > 1 && key < root->left->value){
         return rightRotation(root);
     }
-    if(balance < -1 && root->right != NULL && key > root->right->value){
+    // Right Right Case
+    if(balance < -1 && key > root->right->value){
         return leftRotation(root);
     }
-    if(balance > 1 && root->left != NULL && key > root->left->value){
+    // Left Right Case
+    if(balance > 1 && key > root->left->value){
         root->left = leftRotation(root->left);
         return rightRotation(root);
     }
-    if(balance < -1 && root->right != NULL && key < root->right->value){
+    // Right Left Case
+    if(balance < -1 && key < root->right->value){
         root->right = rightRotation(root->right);
         return leftRotation(root);
     }
     return root;
 }
 
-void inorderAVL(Node* root){
+void inorder(Node* root){
     if(root == NULL) return;
-
-    inorderAVL(root->left);
-    cout<<root->value<<" ";
-    inorderAVL(root->right);
+    inorder(root->left);
+    cout << root->value << " ";
+    inorder(root->right);
 }
 
 int main(){
@@ -95,7 +97,7 @@ int main(){
     root = insertAVL(root, 78);
     root = insertAVL(root, 210);
 
-    cout<<"\nInorderAVL: ........\n";
-    inorderAVL(root);
-    cout<<endl;
+    cout << "\nInorder Traversal of AVL Tree:\n";
+    inorder(root);
+    cout << endl;
 }
