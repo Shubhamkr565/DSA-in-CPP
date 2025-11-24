@@ -2,15 +2,17 @@
 #include<list>
 using namespace std;
 
+
 class HashTable{
     private:
         int bucket;
-        list<int> *table;
+        list<int>*table;
     public:
         HashTable(int size){
             bucket = size;
             table = new list<int>[bucket];
         }
+    
     int hashFun(int key){
         return key%bucket;
     }
@@ -19,31 +21,23 @@ class HashTable{
         int index = hashFun(key);
         table[index].push_back(key);
     }
-    bool searching(int key){
+
+    void deleteItem(int key){
+        int index = hashFun(key);
+        table[index].remove(key);
+    }
+    
+    bool searchingItem(int key){
         int index = hashFun(key);
 
-        bool found = false;
         for(auto x: table[index]){
             if(x == key){
-                found = true;
-                break;
+                return true;
             }
         }
-        if(found){
-            cout<<"Key: "<<key<<" Found."<<endl;
-        }else{
-             cout<<"Key: "<<key<<" Not Found."<<endl;
-        }
+        return false;
     }
-    void deleteItem(int key){
-        if(searching(key)){
-            int index = hashFun(key);
-            table[index].remove(key);
-            cout<<"Key: "<<key<<" deleted Successfully..."<<endl;
-        }else{
-            cout<<"Key Not Found."<<endl;
-        }
-    }
+
 
     void display(){
         for(int i=0; i<bucket; i++){
@@ -57,21 +51,28 @@ class HashTable{
 };
 
 
-
 int main(){
-    int keys[] = {1,2,3,4,5,6,7,8,9,10};
-    int n = sizeof(keys)/sizeof(keys[0]);
-    HashTable h(5);
+    int keys[] = {10,23,45,6,4,42,653};
+    int n = sizeof(keys)/ sizeof(keys[0]);
 
+    HashTable h(5);
+    cout<<"Initial items: "<<endl;
     for(int i=0; i<n; i++){
         h.insertItem(keys[i]);
     }
-    cout<<"Initial Hash table: "<<endl;
+
     h.display();
 
-    h.searching(12);
-
-    h.deleteItem(4);
+    cout<<"After Deleted Item: "<<endl;
+    h.deleteItem(653);
     h.display();
+
+    cout<<"Searching Item: "<<endl;
+    if(h.searchingItem(23)){
+        cout<<"Key Found.\n";
+    }else{
+        cout<<"Key Not Found.\n";
+    }
     return 0;
+
 }

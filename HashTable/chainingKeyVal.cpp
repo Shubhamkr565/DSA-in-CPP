@@ -40,18 +40,19 @@ class HashTable{
         return false;
     }
     void deleteItem(int key) {
-    int index = hashFun(key);
+        int index = hashFun(key);
 
-    for (auto it = table[index].begin(); it != table[index].end(); it++) {
-        if (it == key) {
-            table[index].erase(it);
-            cout << "Key " << key << " deleted successfully.\n";
-            return;
+
+        for (auto it = table[index].begin(); it != table[index].end(); it++) {
+            if (it->first == key) {
+                table[index].erase(it);
+                cout << "Key " << key << " deleted successfully.\n";
+                return;
+            }
         }
+        cout << "Key not found!\n";
     }
 
-        cout << "Key " << key << " not found.\n";
-    }
 
     void display(){
         for(int i=0; i<bucket; i++){
