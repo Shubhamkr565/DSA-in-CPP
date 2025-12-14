@@ -35,7 +35,7 @@ class LinkedList{
         temp->next = newNode;
     }
 
-    Node* mergeList(Node* l1,Node* l2){
+    Node* mergeList(Node* l1,Node* l2){ //l1= head1, l2 = head2
         Node* dummy = new Node(-1);
         Node* tail = dummy;
 
